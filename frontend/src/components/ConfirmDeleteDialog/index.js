@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 import {
   CButton,
@@ -12,7 +13,6 @@ import {
 
 export default function ConfirmDeleteDialog({
   message,
-  title,
   open,
   onCancel,
   onConfirm,
@@ -38,3 +38,11 @@ export default function ConfirmDeleteDialog({
     </CDialog>
   );
 }
+
+ConfirmDeleteDialog.propTypes = {
+  message: PropTypes.string.isRequired,
+  open: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+};
