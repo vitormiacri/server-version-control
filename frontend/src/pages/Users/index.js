@@ -100,7 +100,7 @@ export default function Users({ history }) {
     const user = users.find(item => id === item.id);
 
     setDeleteMessage(
-      `Você confirma a exclusão do usuário Nome: ${user.name} e e-mail: ${user.ip}?`
+      `Você confirma a exclusão do usuário ${user.name} com e-mail: ${user.email}?`
     );
     setIdUser(id);
     setOpenDialog(true);

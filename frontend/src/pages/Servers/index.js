@@ -103,7 +103,7 @@ export default function Servers({ history }) {
     const server = servers.find(item => id === item.id);
 
     setDeleteMessage(
-      `Você confirma a exclusão do servidor Nome: ${server.name} e IP: ${server.ip}?`
+      `Você confirma a exclusão do servidor ${server.name} com o IP ${server.ip}?`
     );
     setIdServer(id);
     setOpenDialog(true);
@@ -142,6 +142,7 @@ export default function Servers({ history }) {
   }
 
   function handleAdd() {
+    setServerEdit({});
     setTitleDialog(`Novo servidor`);
     setOpenFormDialog(true);
   }
