@@ -73,6 +73,9 @@ export default function ResultTable({
                 onChangeRowsPerPage={handlePerPageChange}
                 labelRowsPerPage="Total por página"
                 ActionsComponent={TablePaginationActions}
+                labelDisplayedRows={({ from, to, count }) =>
+                  `${from}-${to} de ${count}`
+                }
               />
             </TableRow>
           </TableFooter>

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 import Header from '~/components/Header';
 import ConfirmDeleteDialog from '~/components/ConfirmDeleteDialog';
-import FormDialog from './FormDialog';
+import FormDialog from './Form';
 import ResultTable from './ResultTable';
 import {
   Container,
@@ -219,8 +219,8 @@ export default function Users({ history }) {
       <FormDialog
         title={titleDialog}
         open={openFormDialog}
-        user={userEdit}
-        loadUsers={loadUsers}
+        values={userEdit}
+        loadData={loadUsers}
         onClose={() => handleCloseDialog()}
       />
     </Container>

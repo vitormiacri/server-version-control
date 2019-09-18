@@ -16,11 +16,11 @@ export const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const CustomTableRow = withStyles(theme => ({
+export const CustomTableRow = withStyles(() => ({
   root: {},
 }))(TableRow);
 
-export const CustomTableCell = withStyles(theme => ({
+export const CustomTableCell = withStyles(() => ({
   root: {
     color: '#fff',
     fontSize: '1rem',
@@ -29,7 +29,7 @@ export const CustomTableCell = withStyles(theme => ({
   },
 }))(TableCell);
 
-export const CustomTableCellDetails = withStyles(theme => ({
+export const CustomTableCellDetails = withStyles(() => ({
   root: {
     textAlign: 'center',
     display: 'flex',
@@ -55,7 +55,7 @@ export const DeleteButton = withStyles(theme => ({
   },
 }))(Button);
 
-export const Empty = withStyles(theme => ({
+export const Empty = withStyles(() => ({
   root: {
     margin: '2rem',
   },
