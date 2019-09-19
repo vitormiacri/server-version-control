@@ -5,9 +5,7 @@ import { MdAddCircleOutline, MdSearch } from 'react-icons/md';
 import { TextField, Typography } from '@material-ui/core';
 import Loader from 'react-loader-spinner';
 import { toast } from 'react-toastify';
-import PropTypes from 'prop-types';
 
-import Header from '~/components/Header';
 import ConfirmDeleteDialog from '~/components/ConfirmDeleteDialog';
 import FormDialog from './Form';
 import ResultTable from './ResultTable';
@@ -22,7 +20,7 @@ import {
 
 import api from '~/services/api';
 
-export default function Versions({ history }) {
+export default function Versions() {
   const [versions, setVersions] = useState([]);
   const [totalRows, setTotalRows] = useState(0);
   const [version, setVersion] = useState('');
@@ -60,25 +58,8 @@ export default function Versions({ history }) {
     setLoading(false);
   }
 
-  function loadToken() {
-    const auth = localStorage.getItem('@server_control/auth');
-
-    if (auth) {
-      const { token } = JSON.parse(auth);
-      if (!token) {
-        history.push('/');
-      }
-
-      api.defaults.headers.Authorization = `Bearer ${token}`;
-
-      loadVersions();
-    } else {
-      history.push('/');
-    }
-  }
-
   useEffect(() => {
-    loadToken();
+    loadVersions();
   }, []);
 
   useEffect(() => {
@@ -156,7 +137,6 @@ export default function Versions({ history }) {
 
   return (
     <Container>
-      <Header history={history} />
       <Content>
         <CustomCard>
           <div>
@@ -218,9 +198,3 @@ export default function Versions({ history }) {
     </Container>
   );
 }
-
-Versions.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};

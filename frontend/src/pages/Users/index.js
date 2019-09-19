@@ -5,9 +5,7 @@ import { MdAddCircleOutline, MdSearch } from 'react-icons/md';
 import { TextField, Typography } from '@material-ui/core';
 import Loader from 'react-loader-spinner';
 import { toast } from 'react-toastify';
-import PropTypes from 'prop-types';
 
-import Header from '~/components/Header';
 import ConfirmDeleteDialog from '~/components/ConfirmDeleteDialog';
 import FormDialog from './Form';
 import ResultTable from './ResultTable';
@@ -22,7 +20,7 @@ import {
 
 import api from '~/services/api';
 
-export default function Users({ history }) {
+export default function Users() {
   const [users, setUsers] = useState([]);
   const [totalRows, setTotalRows] = useState(0);
   const [name, setName] = useState('');
@@ -60,25 +58,8 @@ export default function Users({ history }) {
     setLoading(false);
   }
 
-  function loadToken() {
-    const auth = localStorage.getItem('@server_control/auth');
-
-    if (auth) {
-      const { token } = JSON.parse(auth);
-      if (!token) {
-        history.push('/');
-      }
-
-      api.defaults.headers.Authorization = `Bearer ${token}`;
-
-      loadUsers();
-    } else {
-      history.push('/');
-    }
-  }
-
   useEffect(() => {
-    loadToken();
+    loadUsers();
   }, []);
 
   useEffect(() => {
@@ -130,7 +111,6 @@ export default function Users({ history }) {
 
   function handleEdit(id) {
     const user = users.find(item => id === item.id);
-    console.tron.log(user);
     setUserEdit(user);
     setTitleDialog(`Editando o usuário: ${user.name}`);
     setOpenFormDialog(true);
@@ -158,7 +138,6 @@ export default function Users({ history }) {
 
   return (
     <Container>
-      <Header history={history} />
       <Content>
         <CustomCard>
           <div>
@@ -226,9 +205,3 @@ export default function Users({ history }) {
     </Container>
   );
 }
-
-Users.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};

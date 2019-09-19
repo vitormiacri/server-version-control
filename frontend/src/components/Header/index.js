@@ -1,28 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FaUserFriends, FaLaptop, FaCodeBranch } from 'react-icons/fa';
-import PropTypes from 'prop-types';
 
 import { Container, Content, Avatar, Info } from './styles';
+import { signOut } from '~/store/modules/auth/actions';
 
-export default function Header({ history }) {
-  const [userInfo, setUserInfo] = useState({});
+export default function Header() {
+  const userInfo = useSelector(state => state.user.profile);
+  const dispatch = useDispatch();
 
   function handleLogout() {
-    localStorage.removeItem('@server_control/auth');
-    history.push('/');
+    dispatch(signOut());
   }
-
-  useEffect(() => {
-    const auth = localStorage.getItem('@server_control/auth');
-
-    if (auth) {
-      const { user } = JSON.parse(auth);
-      if (user) {
-        setUserInfo({ ...user, avatarLetter: user.name.charAt(0) });
-      }
-    }
-  }, []);
 
   return (
     <Container>
@@ -44,21 +34,16 @@ export default function Header({ history }) {
 
         <div>
           <Info>
-            <strong>{userInfo.name}</strong>
+            <strong>{userInfo ? userInfo.name : ''}</strong>
             <button type="button" onClick={() => handleLogout()}>
               Sair
             </button>
           </Info>
           <Avatar>
-            <span>{userInfo.avatarLetter}</span>
+            <span>{userInfo ? userInfo.name.charAt(0) : ''}</span>
           </Avatar>
         </div>
       </Content>
     </Container>
   );
 }
-Header.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};

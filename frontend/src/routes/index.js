@@ -1,6 +1,7 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
+import Route from './Routes';
 import Login from '~/pages/Login';
 import Servers from '~/pages/Servers';
 import Versions from '~/pages/Versions';
@@ -10,9 +11,9 @@ export default function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={Login} />
-      <Route path="/servers" exact component={Servers} />
-      <Route path="/versions" exact component={Versions} />
-      <Route path="/users" exact component={Users} />
+      <Route path="/servers" exact component={Servers} isPrivate />
+      <Route path="/versions" exact component={Versions} isPrivate />
+      <Route path="/users" exact component={Users} isPrivate />
     </Switch>
   );
 }

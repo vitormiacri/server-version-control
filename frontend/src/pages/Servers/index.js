@@ -5,9 +5,7 @@ import { MdAddCircleOutline, MdSearch } from 'react-icons/md';
 import { TextField, Typography } from '@material-ui/core';
 import Loader from 'react-loader-spinner';
 import { toast } from 'react-toastify';
-import PropTypes from 'prop-types';
 
-import Header from '~/components/Header';
 import ConfirmDeleteDialog from '~/components/ConfirmDeleteDialog';
 import FormDialog from './Form';
 import ResultTable from './ResultTable';
@@ -22,7 +20,7 @@ import {
 
 import api from '~/services/api';
 
-export default function Servers({ history }) {
+export default function Servers() {
   const [servers, setServers] = useState([]);
   const [totalRows, setTotalRows] = useState(0);
   const [name, setName] = useState('');
@@ -45,7 +43,6 @@ export default function Servers({ history }) {
   const [page, setPage] = useState(0);
 
   async function loadServers() {
-    console.tron.log(page);
     const response = await api.get('/servers', {
       params: {
         name: name || null,
@@ -63,25 +60,8 @@ export default function Servers({ history }) {
     setLoading(false);
   }
 
-  function loadToken() {
-    const auth = localStorage.getItem('@server_control/auth');
-
-    if (auth) {
-      const { token } = JSON.parse(auth);
-      if (!token) {
-        history.push('/');
-      }
-
-      api.defaults.headers.Authorization = `Bearer ${token}`;
-
-      loadServers();
-    } else {
-      history.push('/');
-    }
-  }
-
   useEffect(() => {
-    loadToken();
+    loadServers();
   }, []);
 
   useEffect(() => {
@@ -163,7 +143,6 @@ export default function Servers({ history }) {
 
   return (
     <Container>
-      <Header history={history} />
       <Content>
         <CustomCard>
           <div>
@@ -237,9 +216,3 @@ export default function Servers({ history }) {
     </Container>
   );
 }
-
-Servers.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};

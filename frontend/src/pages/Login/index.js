@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
-import { toast } from 'react-toastify';
 import { MdInput } from 'react-icons/md';
 import * as Yup from 'yup';
 
 import logo from '~/assets/logo.png';
 import { Container } from './styles';
-
-import api from '~/services/api';
+import { signInRequest } from '~/store/modules/auth/actions';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -17,39 +16,16 @@ const schema = Yup.object().shape({
   password: Yup.string().required('A senha é obrigatória'),
 });
 
-export default function Login({ history }) {
-  useEffect(() => {
-    const auth = localStorage.getItem('@server_control/auth');
-
-    if (auth) {
-      const { token } = JSON.parse(auth);
-      if (token) {
-        history.push('/servers');
-      }
-    }
-  }, []);
+export default function Login() {
+  const dispatch = useDispatch();
 
   async function handleSubmit({ email, password }) {
-    try {
-      const response = await api.post('/sessions', { email, password });
-      const { user } = response.data;
-
-      localStorage.setItem(
-        '@server_control/auth',
-        JSON.stringify(response.data)
-      );
-
-      toast.success(`Bem-vindo ${user.name}!`);
-      history.push('/servers');
-    } catch (err) {
-      console.tron.error(err.message);
-      toast.error('Dados inválidos. Verifique seu e-mail e senha.');
-    }
+    dispatch(signInRequest(email, password));
   }
 
   return (
     <Container>
-      <img src={logo} alt="Kingvoice" />
+      <img src={logo} alt="Version Control " />
 
       <Form schema={schema} onSubmit={handleSubmit}>
         <Input type="email" name="email" placeholder="Seu e-email" />
