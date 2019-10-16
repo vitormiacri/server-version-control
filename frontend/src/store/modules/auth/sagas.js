@@ -16,6 +16,11 @@ export function* signIn({ payload }) {
     });
 
     const { token, user } = response.data;
+
+    if (token) {
+      api.defaults.headers.Authorization = `Bearer ${token}`;
+    }
+
     yield put(signInSuccess(token, user));
     history.push('/servers');
     toast.success(`Bem-vindo ${user.name}!`);

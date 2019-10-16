@@ -4,7 +4,7 @@ import { persistReducer } from 'redux-persist';
 export default reducers => {
   const persistedReducer = persistReducer(
     {
-      key: 'kingvoice',
+      key: 'server-control',
       storage,
       whitelist: ['auth', 'user'],
     },
